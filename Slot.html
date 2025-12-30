@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Fast Food Slot Machine</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .slot-machine {
+      text-align: center;
+      padding: 20px 30px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+    }
+
+    .slots {
+      font-size: 26px;
+      margin: 20px 0;
+      letter-spacing: 2px;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="slot-machine">
+    <h1>🍔 Fast Food Slots 🍟</h1>
+
+    <div class="slots" id="slots">
+      Burger | Fries | Soda
+    </div>
+
+    <button id="rollBtn" onclick="roll()">Roll</button>
+  </div>
+
+  <script>
+    const items = [
+      "Burger",
+      "Fries",
+      "Chicken Nugget",
+      "Hot Dog",
+      "Pizza Slice",
+      "Taco",
+      "Fried Chicken",
+      "Milkshake",
+      "Onion Rings"
+    ];
+
+    const slotsEl = document.getElementById("slots");
+    const rollBtn = document.getElementById("rollBtn");
+
+    let spinning = false;
+
+    function randomItem() {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+
+    function roll() {
+      if (spinning) return;
+
+      spinning = true;
+      rollBtn.disabled = true;
+
+      // Change words rapidly
+      const spinInterval = setInterval(() => {
+        slotsEl.textContent =
+          `${randomItem()} | ${randomItem()} | ${randomItem()}`;
+      }, 80); // speed of "rolling"
+
+      // Stop after 3 seconds
+      setTimeout(() => {
+        clearInterval(spinInterval);
+
+        // Final result
+        slotsEl.textContent =
+          `${randomItem()} | ${randomItem()} | ${randomItem()}`;
+
+        spinning = false;
+        rollBtn.disabled = false;
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
